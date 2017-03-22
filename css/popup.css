@@ -1,0 +1,70 @@
+body {
+    margin: 0px;
+}
+
+
+.popup-window {
+    display: block;
+    position: relative;
+
+    padding: 15px;
+
+    background-color: black;
+    color: white;
+
+    width: auto;
+    height: auto;
+}
+
+
+.popup-window--saving {
+    width: 100vw;
+    height: 100vh;
+}
+
+
+
+h1 {
+    font-size: 18px;
+}
+
+
+
+main {
+    text-align: center;
+}
+
+
+
+.button {
+    padding: 15px;
+}
+
+
+
+.button--active {
+    background-color: green;
+}
+
+
+
+.user-buttons {
+    list-style: none;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+
+.item {
+    margin: 0px;
+    padding: 0px;
+    margin-bottom: 5px;
+}
+
+
+
+.item:last-child {
+    margin-bottom: 0px;
+}
