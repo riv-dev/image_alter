@@ -33,7 +33,7 @@ $(document).ready(function () {
     $('#export_btn').click(function () {
         $('#popup').addClass('popup-window--saving');
         //chrome extension adds padding right, remove
-        $('#popup').css('padding-right','15px');
+        $('#popup').css('padding-right', '15px');
         inst.open();
     });
 
@@ -41,24 +41,20 @@ $(document).ready(function () {
         console.log('Confirmation button is clicked');
         var filename_value = $('#filename-input').val();
 
-        if(filename_value && filename_value.length > 0) {
-            var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+        if (filename_value && filename_value.length > 0) {
+            var blob = new Blob(["Hello, world!"], { type: "text/plain;charset=utf-8" });
             saveAs(blob, filename_value);
         }
+    });
 
+
+    $(document).on('closed', '.remodal', function (e) {
+        // Reason: 'confirmation', 'cancellation'
+        console.log('Modal is closed' + (e.reason ? ', reason: ' + e.reason : ''));
         $('#filename-input').val('');
         $('#popup').removeClass('popup-window--saving');
         //chrome extension adds padding right, remove
-        $('#popup').css('padding-right','15px');
+        $('#popup').css('padding-right', '15px');        
     });
-
-    $(document).on('cancellation', '.remodal', function () {
-        console.log('Cancel button is clicked');
-        $('#filename-input').val('');
-        $('#popup').removeClass('popup-window--saving');
-        //chrome extension adds padding right, remove
-        $('#popup').css('padding-right','15px');
-    });
-
 });
 
