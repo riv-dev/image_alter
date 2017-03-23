@@ -42,8 +42,20 @@ $(document).ready(function () {
         var filename_value = $('#filename-input').val();
 
         if (filename_value && filename_value.length > 0) {
-            var blob = new Blob(["Hello, world!"], { type: "text/plain;charset=utf-8" });
-            saveAs(blob, filename_value);
+
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, { "message": "clicked_export_button_action" }, function (response) {
+                    console.log(response.status);
+                    if(response.status == "success") {
+                        var blob = new Blob(["<!DOCTYPE html>","<html>",response.html,"</html>"], { type: "text/plain;charset=utf-8" });
+                        saveAs(blob, filename_value);
+                    } else {
+                        alert("An error occured.");
+                    }
+                });
+            });
+
+
         }
     });
 
@@ -54,7 +66,7 @@ $(document).ready(function () {
         $('#filename-input').val('');
         $('#popup').removeClass('popup-window--saving');
         //chrome extension adds padding right, remove
-        $('#popup').css('padding-right', '15px');        
+        $('#popup').css('padding-right', '15px');
     });
 });
 

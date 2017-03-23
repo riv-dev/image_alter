@@ -68,6 +68,9 @@ chrome.runtime.onMessage.addListener(
         sendResponse({ status: "inactive" });
       }
     }
+    else if (request.message === "clicked_export_button_action") { 
+        sendResponse({ status: "success", html: $('html').html() });
+    }
   }
 );
 
