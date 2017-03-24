@@ -19,6 +19,10 @@ Drag the "img_alt.crx" file into your browser to install the extension.
 
 ![alt text](/extension_install.png "Install Extension")
 
+## Setting up file saving
+Set the file save dialog to open so you can easily replace existing HTML files with the edited version.
+![alt text](/download.png "Download dialog")
+
 ## Usage
 1. Click on top right icon to view interface.
 2. Click on "Turn ON" to turn on the extension.
@@ -31,5 +35,5 @@ Drag the "img_alt.crx" file into your browser to install the extension.
 ![alt text](/enter_alt.png "Enter ALT")
 
 ## Export to HTML
-1. Click Export button in the interface to export the html.
+1. Click Export button in the interface to save the html.
 ![alt text](/export.png "Export")
