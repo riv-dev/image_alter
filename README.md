@@ -22,6 +22,8 @@ Drag the "img_alt.crx" file into your browser to install the extension.
 
 ## Setting up file saving
 Set the save dialog to open so you can easily replace existing HTML files with the edited version.
+1. Type chrome://settings in the URL
+2. Check "Ask where to save each file before downloading" under "Downloads"
 ![alt text](/download.png "Download dialog")
 
 ## Image Alter Extension Usage
