@@ -1,8 +1,8 @@
 # Image Alter!
 A chrome extension that allows direct editing of ALT attribute on image tags.
 - Click on an image to edit the ALT attribute
-- Red outline around images that have no ALT defined
-- Blue outline around images that have ALT defined
+- Displays RED outline around images that have no ALT defined
+- Displays BLUE outline around images that have ALT defined
 
 ## Installing the Chrome Extension
 Download the most recent code from github
