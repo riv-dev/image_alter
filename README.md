@@ -25,3 +25,11 @@ Drag the "img_alt.crx" file into your browser to install the extension.
 3. Images will that have no ALT defined will be outlined in RED.
 4. Images that have ALT defined will be outlined in BLUE.
 ![alt text](/usage.png "Usage")
+
+## Edit ALT
+1. Click on an image to edit the ALT attribute
+![alt text](/enter_alt.png "Enter ALT")
+
+## Export to HTML
+1. Click Export button in the interface to export the html.
+![alt text](/export.png "Export")
