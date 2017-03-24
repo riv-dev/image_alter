@@ -10,12 +10,10 @@ Download the most recent code from github
 git clone https://github.com/riv-dev/image_alter.git
 ```
 
-Make sure to check for updates ocassionally by running:
+Make sure to check for updates ocassionally by running within the image_alter folder:
 ```bash
 git pull origin master
 ```
-Run the above command inside the image_alter directory
-
 Start chrome browser and enter chrome://extensions in URL
 Drag the "img_alt.crx" file into your browser to install the extension.
 
