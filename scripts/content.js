@@ -1,9 +1,9 @@
 var bool = false;
 
 var htmlStr = "";
-htmlStr += '<div class="remodal" data-remodal-id="alt-modal">'
+htmlStr += '<div id="alt-remodal" class="remodal" data-remodal-id="alt-modal" data-remodal-options="hashTracking: false">'
 htmlStr += '<button data-remodal-action="close" class="remodal-close"></button>'
-htmlStr += '<h1 style="font-size:20px">Enter an ALT for the image</h1>'
+htmlStr += '<h1>Enter an ALT for the image</h1>'
 htmlStr += '<p>'
 htmlStr += "<input id='alt-input' type='text' />"
 htmlStr += '</p>'
@@ -19,7 +19,7 @@ var inst = null;
 
 function addRemodalBox() {
   $('body').append(htmlStr);
-  inst = $('[data-remodal-id=alt-modal]').remodal();
+  inst = $('[data-remodal-id=alt-modal]').remodal({'hashTracking':false});
 }
 
 function removeRemodalBox() {

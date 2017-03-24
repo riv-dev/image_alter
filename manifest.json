@@ -1,7 +1,7 @@
 {
   "name": "Image Alter",
   "description": "Add alt's to images",
-  "version": "1.0",
+  "version": "1.9.5",
   "browser_action": {
         "default_icon": "icon.png",
         "default_popup": "popup.html",
@@ -13,7 +13,7 @@
   "content_scripts": [{
         "matches": ["<all_urls>"],
         "all_frames": true,
-        "css": ["libs/remodal/remodal.css","libs/remodal/remodal-default-theme.css"],
+        "css": ["libs/remodal/remodal.css","libs/remodal/remodal-default-theme.css","css/content.css"],
         "js":      ["libs/jquery/jquery.min.js", "libs/remodal/remodal.min.js", "scripts/content.js"]
   }],  
   "permissions": [
