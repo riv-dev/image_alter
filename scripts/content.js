@@ -15,12 +15,21 @@ htmlStr += '</div>'
 
 //$('a').on('click.myDisable', function(e) { e.preventDefault(); });
 
-$('body').append(htmlStr);
+var inst = null;
 
-var inst = $('[data-remodal-id=modal]').remodal();
+function addRemodalBox() {
+  $('body').append(htmlStr);
+  inst = $('[data-remodal-id=modal]').remodal();
+}
+
+function removeRemodalBox() {
+  inst.destroy();
+}
 
 var active = false;
 var selectedImage = null;
+
+addRemodalBox();
 
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
@@ -69,7 +78,27 @@ chrome.runtime.onMessage.addListener(
       }
     }
     else if (request.message === "clicked_export_button_action") { 
+        if(active) {
+          $('body img').css('border', '');
+          $('body').css('padding-right','');
+        }
+
+        removeRemodalBox();
+
+        //Export the html without the remodal and img border styles
         sendResponse({ status: "success", html: $('html').html() });
+
+        if(active) {
+          $('body img').each(function () {
+            if ($(this).attr('alt') && $(this).attr('alt').length > 0) {
+              $(this).css('border', '3px dotted blue');
+            } else {
+              $(this).css('border', '3px dotted red');
+            }
+          });
+        }
+
+        addRemodalBox();
     }
   }
 );
