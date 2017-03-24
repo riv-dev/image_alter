@@ -19,4 +19,4 @@ Run the above command inside the image_alter directory
 Start chrome browser and enter chrome://extensions in URL
 Drag the "img_alt.crx" file into your browser to install the extension.
 
-![alt text] (extension_install.png "Install Extension")
+![alt text] (/extension_install.png "Install Extension")
