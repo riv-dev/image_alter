@@ -26,7 +26,7 @@ Set the save dialog to open so you can easily replace existing HTML files with t
 2. Check "Ask where to save each file before downloading" under "Downloads"
 ![alt text](/download.png "Download dialog")
 
-## Image Alter Extension Usage
+# Image Alter Extension Usage
 1. Click on top right icon to view interface.
 2. Click on "Turn ON" to turn on the extension.
 3. RED outlines will appear around all images that have no ALT defined.
