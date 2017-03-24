@@ -1,7 +1,7 @@
 var bool = false;
 
 var htmlStr = "";
-htmlStr += '<div class="remodal img-alt-remodal" data-remodal-id="modal">'
+htmlStr += '<div class="remodal" data-remodal-id="alt-modal">'
 htmlStr += '<button data-remodal-action="close" class="remodal-close"></button>'
 htmlStr += '<h1 style="font-size:20px">Enter an ALT for the image</h1>'
 htmlStr += '<p>'
@@ -19,7 +19,7 @@ var inst = null;
 
 function addRemodalBox() {
   $('body').append(htmlStr);
-  inst = $('[data-remodal-id=modal]').remodal();
+  inst = $('[data-remodal-id=alt-modal]').remodal();
 }
 
 function removeRemodalBox() {
@@ -86,7 +86,7 @@ chrome.runtime.onMessage.addListener(
         removeRemodalBox();
 
         //Export the html without the remodal and img border styles
-        sendResponse({ status: "success", html: $('html').html() });
+        sendResponse({ status: "success", html: $('html')[0].outerHTML });
 
         if(active) {
           $('body img').each(function () {

@@ -34,6 +34,12 @@ $(document).ready(function () {
         $('#popup').addClass('popup-window--saving');
         //chrome extension adds padding right, remove
         $('#popup').css('padding-right', '15px');
+
+        /*chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            var filename = tabs[0].url;
+            $('#filename-input').val(filename);
+        });*/
+
         inst.open();
     });
 
@@ -46,8 +52,8 @@ $(document).ready(function () {
             chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                 chrome.tabs.sendMessage(tabs[0].id, { "message": "clicked_export_button_action" }, function (response) {
                     console.log(response.status);
-                    if(response.status == "success") {
-                        var blob = new Blob(["<!DOCTYPE html>","<html>",response.html,"</html>"], { type: "text/plain;charset=utf-8" });
+                    if (response.status == "success") {
+                        var blob = new Blob(["<!DOCTYPE html>", response.html], { type: "text/plain;charset=utf-8" });
                         saveAs(blob, filename_value);
                     } else {
                         alert("An error occured.");
