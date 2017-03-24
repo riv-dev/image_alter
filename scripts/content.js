@@ -1,9 +1,9 @@
 var bool = false;
 
 var htmlStr = "";
-htmlStr += '<div class="remodal" data-remodal-id="modal">'
+htmlStr += '<div class="remodal img-alt-remodal" data-remodal-id="modal">'
 htmlStr += '<button data-remodal-action="close" class="remodal-close"></button>'
-htmlStr += '<h1>Enter an ALT for the image</h1>'
+htmlStr += '<h1 style="font-size:20px">Enter an ALT for the image</h1>'
 htmlStr += '<p>'
 htmlStr += "<input id='alt-input' type='text' />"
 htmlStr += '</p>'
