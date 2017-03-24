@@ -14,7 +14,7 @@ Make sure to check for updates ocassionally by running within the image_alter fo
 ```bash
 git pull origin master
 ```
-Start chrome browser and enter chrome://extensions in URL
+Start chrome browser and enter chrome://extensions in URL.
 Drag the "img_alt.crx" file into your browser to install the extension.
 
 ![alt text](/extension_install.png "Install Extension")
