@@ -17,9 +17,13 @@ htmlStr += '</div>'
 
 var inst = null;
 
+var diffMatchPatch = new diff_match_patch();
+
 function addRemodalBox() {
   $('body').append(htmlStr);
-  inst = $('[data-remodal-id=alt-modal]').remodal({'hashTracking':false});
+  inst = $('[data-remodal-id=alt-modal]').remodal({
+    'hashTracking': false
+  });
 }
 
 function removeRemodalBox() {
@@ -33,15 +37,23 @@ addRemodalBox();
 
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
-    if (request.message === "clicked_browser_action") {
+    if (request.message === "get_url") {
+      sendResponse({
+        host: document.location.host,
+        relative_uri: document.location.pathname
+      });
+    } else if (request.message === "clicked_browser_action") {
       //send back status
       if (active) {
-        sendResponse({ status: "active" });
+        sendResponse({
+          status: "active"
+        });
       } else {
-        sendResponse({ status: "inactive" });
+        sendResponse({
+          status: "inactive"
+        });
       }
-    }
-    else if (request.message === "clicked_button_action") {
+    } else if (request.message === "clicked_button_action") {
       if (!active) {
         $('body img').each(function () {
           if ($(this).attr('alt') && $(this).attr('alt').length > 0) {
@@ -64,7 +76,9 @@ chrome.runtime.onMessage.addListener(
           inst.open();
         });
 
-        sendResponse({ status: "active" });
+        sendResponse({
+          status: "active"
+        });
       } else {
         $('body img').css('border', 'none');
 
@@ -74,31 +88,16 @@ chrome.runtime.onMessage.addListener(
 
         $('body img').unbind("click");
 
-        sendResponse({ status: "inactive" });
+        sendResponse({
+          status: "inactive"
+        });
       }
-    }
-    else if (request.message === "clicked_export_button_action") { 
-        if(active) {
-          $('body img').css('border', '');
-          $('body').css('padding-right','');
-        }
-
-        removeRemodalBox();
-
-        //Export the html without the remodal and img border styles
-        sendResponse({ status: "success", html: $('html')[0].outerHTML });
-
-        if(active) {
-          $('body img').each(function () {
-            if ($(this).attr('alt') && $(this).attr('alt').length > 0) {
-              $(this).css('border', '3px dotted blue');
-            } else {
-              $(this).css('border', '3px dotted red');
-            }
-          });
-        }
-
-        addRemodalBox();
+    } else if (request.message === "clicked_options_button_action") {
+      //Export the html without the remodal and img border styles
+      sendResponse({
+        status: "success",
+        html: $('html')[0].outerHTML
+      });
     }
   }
 );
@@ -107,7 +106,47 @@ $(document).on('confirmation', '.remodal', function () {
   console.log('Confirmation button is clicked');
   var alt_value = $('#alt-input').val();
   if (alt_value && alt_value.length > 0) {
+    selectedImage.css('border', '');
+
+    //var oldHTML = $('html').html();
+    var oldHTML = selectedImage[0].outerHTML;
+
     selectedImage.attr('alt', alt_value);
+
+    //var newHTML = $('html').html();
+    var newHTML = selectedImage[0].outerHTML;
+
+    var host = document.location.host;
+    var relative_uri = document.location.pathname;
+
+    var patch = JSON.stringify(diffMatchPatch.patch_make(oldHTML, newHTML));
+
+    chrome.storage.sync.get('rootpath', function (result) {
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:9255",
+          data: {
+            relative_uri: relative_uri,
+            host: host,
+            rootpath: result.rootpath,
+            html: selectedImage[0].outerHTML,
+            patch: patch
+          },
+          success: function (data) {
+            if(data.status == "success") {
+              console.log("Success");
+
+            } else {
+              console.log("Error");
+            }
+          },
+          error: function () {
+            console.log("Error");
+          },
+          timeout: 1000
+        });
+    });
+
     selectedImage.css('border', '3px dotted blue');
   }
 });

@@ -17,11 +17,42 @@ body {
 }
 
 
-.popup-window--saving {
+.popup-window--remodal {
     width: 100vw;
     height: 100vh;
 }
 
+#rootpath-input {
+    width: 500px;
+}
+
+#status {
+    text-align: left;
+    font-size: 10px;
+    color: white;
+    padding: 0px;
+    margin: 0px;
+    margin-top: 15px;
+}
+
+#status dt, dd {
+    display: block;
+    padding: 0px;
+    margin: 0px;
+}
+
+#status dd {
+    padding-left: 5px;
+    color: grey;
+}
+
+#status .status--on {
+    color: green;
+}
+
+#status .status--off {
+    color: red;
+}
 
 
 h1 {
