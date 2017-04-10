@@ -32,6 +32,7 @@ function removeRemodalBox() {
 
 var active = false;
 var selectedImage = null;
+var currentImageAlt;
 
 addRemodalBox();
 
@@ -71,7 +72,8 @@ chrome.runtime.onMessage.addListener(
 
         $('body img').click(function (e) {
           e.preventDefault();
-          $('#alt-input').val($(this).attr('alt'));
+          currentImageAlt = $(this).attr('alt');
+          $('#alt-input').val(currentImageAlt);
           selectedImage = $(this);
           inst.open();
         });
@@ -105,6 +107,11 @@ chrome.runtime.onMessage.addListener(
 $(document).on('confirmation', '.remodal', function () {
   console.log('Confirmation button is clicked');
   var alt_value = $('#alt-input').val();
+
+  if (alt_value == currentImageAlt) {
+    return;
+  }
+
   if (alt_value && alt_value.length > 0) {
     selectedImage.css('border', '');
 
