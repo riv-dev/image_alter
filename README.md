@@ -20,8 +20,7 @@ Drag the "img_alt.crx" file into your browser to install the extension.
 ![alt text](/doc_images/extension_install.png "Install Extension")
 
 ## Updating the installation
-
-Make sure to check for updates ocassionally by running within the image_alter folder:
+Occasionally check for updates by running within the image_alter folder:
 ```bash
 git pull origin master
 ```
@@ -30,9 +29,8 @@ Then drag the new "img_alt.crx" into the browser like above.
 
 ## Install the Chrome Extension Server
 Install and start the server before continuing on to the next steps. Visit the link below for installation directions.
-```
-https://github.com/riv-dev/image_alter_server
-```
+
+[https://github.com/riv-dev/image_alter_server](https://github.com/riv-dev/image_alter_server)
 
 # Image Alter Setup
 1. Click on the Chrome Extension icon in the top right.
