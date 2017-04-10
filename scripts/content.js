@@ -1,16 +1,21 @@
 var bool = false;
 
 var htmlStr = "";
-htmlStr += '<div id="alt-remodal" class="remodal" data-remodal-id="alt-modal" data-remodal-options="hashTracking: false">'
-htmlStr += '<button data-remodal-action="close" class="remodal-close"></button>'
-htmlStr += '<h1>Enter an ALT for the image</h1>'
-htmlStr += '<p>'
-htmlStr += "<input id='alt-input' type='text' />"
-htmlStr += '</p>'
-htmlStr += '<br>'
-htmlStr += '<button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>'
-htmlStr += '<button data-remodal-action="confirm" class="remodal-confirm">OK</button>'
-htmlStr += '</div>'
+htmlStr += '<div id="alt-remodal" class="remodal" data-remodal-id="alt-modal" data-remodal-options="hashTracking: false">';
+htmlStr += '<button data-remodal-action="close" class="remodal-close"></button>';
+htmlStr += '<h1>Enter an ALT for the image</h1>';
+htmlStr += '<p>';
+htmlStr += "<input id='alt-input' type='text' />";
+htmlStr += '</p>';
+htmlStr += '<br>';
+htmlStr += '<button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>';
+htmlStr += '<button data-remodal-action="confirm" class="remodal-confirm">OK</button>';
+htmlStr += '</div>';
+
+var cssStr = "";
+cssStr += '.remove-pointer-events, .remove-pointer-events:before, .remove-pointer-events:after {';
+cssStr += '   pointer-events: none;';
+cssStr += '}';
 
 
 //$('a').on('click.myDisable', function(e) { e.preventDefault(); });
@@ -18,23 +23,76 @@ htmlStr += '</div>'
 var inst = null;
 
 var diffMatchPatch = new diff_match_patch();
+var injectedScript;
+var injectedCSS;
+
+function removeLinkBehavior() {
+  $('a').addClass('remove-pointer-events');
+  $('a > *').addClass('remove-pointer-events');
+  $('a img').css('pointer-events','auto');
+  $('a').off();
+  $('a').click(function(e) {
+    e.preventDefault();
+  });
+}
+
+function addBackLinkBehavior() {
+  $('a').removeClass('remove-pointer-events');
+  $('a > *').removeClass('remove-pointer-events');
+  $('a img').css('pointer-events','');
+  $('a').unbind('click');
+}
 
 function addRemodalBox() {
+  injectedCSS = document.createElement('style');
+  injectedCSS.appendChild(document.createTextNode(cssStr));
+  document.head.appendChild(injectedCSS);
+
+  injectedScript = document.createElement('script');
+  injectedScript.appendChild(document.createTextNode('('+ removeLinkBehavior +')();'));
+  document.body.appendChild(injectedScript);
+  //removeLinkBehavior();
+
   $('body').append(htmlStr);
   inst = $('[data-remodal-id=alt-modal]').remodal({
     'hashTracking': false
   });
+
+  $('body img').click(function (e) {
+    e.preventDefault();
+    currentImageAlt = $(this).attr('alt');
+    $('#alt-input').val(currentImageAlt);
+    selectedImage = $(this);
+    inst.open();
+  });
+
+  $('body img').each(function () {
+    $(this).removeClass('remove-pointer-events');
+
+    if ($(this).attr('alt') && $(this).attr('alt').length > 0) {
+      $(this).css('border', '3px dotted blue');
+    } else {
+      $(this).css('border', '3px dotted red');
+    }
+  });
+
 }
 
 function removeRemodalBox() {
+  document.head.removeChild(injectedCSS);
+  document.body.removeChild(injectedScript);
+  addBackLinkBehavior();
   inst.destroy();
+  $('body img').css('border', 'none');
+  $('body img').unbind("click");
 }
+
+
 
 var active = false;
 var selectedImage = null;
 var currentImageAlt;
 
-addRemodalBox();
 
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
@@ -56,39 +114,20 @@ chrome.runtime.onMessage.addListener(
       }
     } else if (request.message === "clicked_button_action") {
       if (!active) {
-        $('body img').each(function () {
-          if ($(this).attr('alt') && $(this).attr('alt').length > 0) {
-            $(this).css('border', '3px dotted blue');
-          } else {
-            $(this).css('border', '3px dotted red');
-          }
-        });
-
         active = true;
 
-        $('a').click(function (e) {
-          e.preventDefault();
-        });
-
-        $('body img').click(function (e) {
-          e.preventDefault();
-          currentImageAlt = $(this).attr('alt');
-          $('#alt-input').val(currentImageAlt);
-          selectedImage = $(this);
-          inst.open();
-        });
+        addRemodalBox();
 
         sendResponse({
           status: "active"
         });
       } else {
-        $('body img').css('border', 'none');
+
+        removeRemodalBox();
+
 
         active = false;
 
-        $('a').unbind("click");
-
-        $('body img').unbind("click");
 
         sendResponse({
           status: "inactive"
