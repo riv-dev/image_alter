@@ -39,7 +39,7 @@ Install and start the server before continuing on to the next steps. Visit the l
 3. Click "Options" button in the Chrome Extension.
 4. Enter the root directory where all your HTML files sit.
 ![alt text](/doc_images/setup2.png "Setup 2")
-5. Visit any of you pages in the web browser. For example:
+5. Visit any of your pages in the web browser. For example:
 ![alt text](/doc_images/setup3.png "Setup 3")
 6. If everything is right, the Sync status should be green and point to your HTML file on your file disk. 
 ![alt text](/doc_images/setup4.png "Setup 4")
