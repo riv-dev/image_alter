@@ -29,18 +29,30 @@ git pull origin master
 Then drag the new "img_alt.crx" into the browser like above.
 
 ## Install the Chrome Extension Server
-Image Alter chrome extension requires you to run the Image Alter Server.  To install the Image Alter Server visit:
+Install and start the server before continuing on to the next steps. Visit the link below for installation directions.
 ```
 https://github.com/riv-dev/image_alter_server
 ```
 
-# Image Alter Extension Usage
-1. Click on top right icon to view interface.
-2. Click on "Turn ON" to turn on the extension.
-3. RED outlines will appear around all images that have no ALT defined.
-4. BLUE outlines will appear around images that have ALT defined.
+# Image Alter Setup
+1. Click on the Chrome Extension icon in the top right.
+2. If the server was installed and started properly, you should see green "Online" status.
+![alt text](/setup1.png "Setup 1")
+3. Click "Options" button in the Chrome Extension.
+4. Enter the root directory where all your HTML files sit.
+![alt text](/setup2.png "Setup 2")
+5. Visit any of you pages in the web browser. For example:
+![alt text](/setup3.png "Setup 3")
+6. If everything is right, the Sync status should be green and point to your HTML file on your file disk. 
+![alt text](/setup4.png "Setup 4")
+
+# Image Alter Usage
+1. Click on "Turn ON" to turn on the extension.
+2. RED outlines will appear around all images that have no ALT defined.
+3. BLUE outlines will appear around images that have ALT defined.
 ![alt text](/usage.png "Usage")
 
 ## Edit ALT
-1. Click on an image to edit the ALT attribute
+1. Click on an image to edit the ALT attribute.  Press OK when done.
+2. Your HTML file should be updated automatically.  You may check your HTML code to confirm.
 ![alt text](/enter_alt.png "Enter ALT")
