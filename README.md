@@ -17,7 +17,7 @@ Start chrome browser and enter chrome://extensions in URL.
 Drag the "img_alt.crx" file into your browser to install the extension.
 ### **Note: Everytime you update the code you have to redo this step.
 
-![alt text](/doc_images/extension_install.png =300x)
+![alt text](/doc_images/extension_install.png | width=300)
 
 ## Updating the installation
 
