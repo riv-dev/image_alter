@@ -153,6 +153,7 @@ $(document).on('confirmation', '.remodal', function () {
 
   if (alt_value && alt_value.length > 0) {
     selectedImage.css('border', '');
+    selectedImage.css('pointer-events','');
 
     //var oldHTML = $('html').html();
     var oldHTML = selectedImage[0].outerHTML;
@@ -194,6 +195,7 @@ $(document).on('confirmation', '.remodal', function () {
     });
 
     selectedImage.css('border', '3px dotted blue');
+    selectedImage.css('pointer-events','auto');
   }
 });
 
