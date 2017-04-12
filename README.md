@@ -15,8 +15,8 @@ git clone https://github.com/riv-dev/image_alter.git
 
 2. Start chrome browser and enter chrome://extensions in URL.
 3. Drag the "img_alt.crx" file into your browser to install the extension.
-#### Make sure to refresh your browser.
-### **Note: Everytime you update the code you have to redo this step.
+4. Refresh your browser.
+### Everytime you update the code you have to redo step 2-4.
 
 ![alt text](/doc_images/extension_install.png "Install Extension")
 
