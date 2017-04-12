@@ -8,13 +8,13 @@ A chrome extension that allows direct editing of ALT attribute on image tags.
 Image Alter has two components, the Chrome Extension, and a local server.  The Chrome Extension allows you to interact directly with images in the web browser, in the background the Chrome Extension communicates with the local server to update HTML files directly on your file disk. In order for the app to work correctly, you need to install both components.
 
 ## Installing the Chrome Extension
-Download the most recent code from github
+1. Download the most recent code from github
 ```bash
 git clone https://github.com/riv-dev/image_alter.git
 ```
 
-Start chrome browser and enter chrome://extensions in URL.
-Drag the "img_alt.crx" file into your browser to install the extension.
+2. Start chrome browser and enter chrome://extensions in URL.
+3. Drag the "img_alt.crx" file into your browser to install the extension.
 #### Make sure to refresh your browser.
 ### **Note: Everytime you update the code you have to redo this step.
 
