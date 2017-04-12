@@ -48,7 +48,7 @@ function diff_match_patch() {
   // end points of a delete need to match.
   this.Patch_DeleteThreshold = 0.5;
   // Chunk size for context length.
-  this.Patch_Margin = 20;
+  this.Patch_Margin = 100;
 
   // The number of bits in an int.
   this.Match_MaxBits = 32;

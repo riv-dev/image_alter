@@ -28,7 +28,7 @@ var injectedCSS;
 
 function removeLinkBehavior() {
   $('a').addClass('remove-pointer-events');
-  $('a > *').addClass('remove-pointer-events');
+  $('a > *').css('pointer-events','none');
   $('a img').css('pointer-events','auto');
   $('a').off();
   $('a').click(function(e) {
@@ -38,12 +38,14 @@ function removeLinkBehavior() {
 
 function addBackLinkBehavior() {
   $('a').removeClass('remove-pointer-events');
-  $('a > *').removeClass('remove-pointer-events');
+  $('a > *').css('pointer-events','');
   $('a img').css('pointer-events','');
   $('a').unbind('click');
 }
 
-function addRemodalBox() {
+function turnOnExtension() {
+  active = true;
+
   injectedCSS = document.createElement('style');
   injectedCSS.appendChild(document.createTextNode(cssStr));
   document.head.appendChild(injectedCSS);
@@ -51,7 +53,6 @@ function addRemodalBox() {
   injectedScript = document.createElement('script');
   injectedScript.appendChild(document.createTextNode('('+ removeLinkBehavior +')();'));
   document.body.appendChild(injectedScript);
-  //removeLinkBehavior();
 
   $('body').append(htmlStr);
   inst = $('[data-remodal-id=alt-modal]').remodal({
@@ -78,12 +79,14 @@ function addRemodalBox() {
 
 }
 
-function removeRemodalBox() {
+function turnOffExtension() {
+  active = false;
+
   document.head.removeChild(injectedCSS);
   document.body.removeChild(injectedScript);
   addBackLinkBehavior();
   inst.destroy();
-  $('body img').css('border', 'none');
+  $('body img').css('border', '');
   $('body img').unbind("click");
 }
 
@@ -114,19 +117,14 @@ chrome.runtime.onMessage.addListener(
       }
     } else if (request.message === "clicked_button_action") {
       if (!active) {
-        active = true;
-
-        addRemodalBox();
+        turnOnExtension();
 
         sendResponse({
           status: "active"
         });
       } else {
 
-        removeRemodalBox();
-
-
-        active = false;
+        turnOffExtension();
 
 
         sendResponse({
@@ -143,6 +141,7 @@ chrome.runtime.onMessage.addListener(
   }
 );
 
+//Extension is ON
 $(document).on('confirmation', '.remodal', function () {
   console.log('Confirmation button is clicked');
   var alt_value = $('#alt-input').val();
@@ -154,6 +153,10 @@ $(document).on('confirmation', '.remodal', function () {
   if (alt_value && alt_value.length > 0) {
     selectedImage.css('border', '');
     selectedImage.css('pointer-events','');
+    var draggable = selectedImage.attr('draggable');
+    var style = selectedImage.attr('style');
+    selectedImage.removeAttr('draggable');
+    selectedImage.removeAttr('style');
 
     //var oldHTML = $('html').html();
     var oldHTML = selectedImage[0].outerHTML;
@@ -194,8 +197,14 @@ $(document).on('confirmation', '.remodal', function () {
         });
     });
 
+    if(style) {
+      selectedImage.attr('style',style);
+    }
     selectedImage.css('border', '3px dotted blue');
     selectedImage.css('pointer-events','auto');
+    if(draggable) {
+      selectedImage.attr('draggable',draggable);
+    }
   }
 });
 
