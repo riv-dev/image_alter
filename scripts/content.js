@@ -1,26 +1,9 @@
 var bool = false;
 
-var htmlStr = "";
-htmlStr += '<div id="alt-remodal" class="remodal" data-remodal-id="alt-modal" data-remodal-options="hashTracking: false">';
-htmlStr += '<button data-remodal-action="close" class="remodal-close"></button>';
-htmlStr += '<h1>Enter an ALT for the image</h1>';
-htmlStr += '<p>';
-htmlStr += "<input id='alt-input' type='text' />";
-htmlStr += '</p>';
-htmlStr += '<br>';
-htmlStr += '<button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>';
-htmlStr += '<button data-remodal-action="confirm" class="remodal-confirm">OK</button>';
-htmlStr += '</div>';
-
 var cssStr = "";
 cssStr += '.remove-pointer-events, .remove-pointer-events:before, .remove-pointer-events:after {';
 cssStr += '   pointer-events: none;';
 cssStr += '}';
-
-
-//$('a').on('click.myDisable', function(e) { e.preventDefault(); });
-
-var inst = null;
 
 var diffMatchPatch = new diff_match_patch();
 var injectedScript;
@@ -30,7 +13,13 @@ function removeLinkBehavior() {
   $('a').addClass('remove-pointer-events');
   $('a > *').css('pointer-events','none');
   $('a img').css('pointer-events','auto');
-  $('a').off();
+
+  //remove all click events
+  $(document).off();
+  $(document).unbind();
+  $('*').unbind();
+  $('*').off();
+
   $('a').click(function(e) {
     e.preventDefault();
   });
@@ -54,17 +43,15 @@ function turnOnExtension() {
   injectedScript.appendChild(document.createTextNode('('+ removeLinkBehavior +')();'));
   document.body.appendChild(injectedScript);
 
-  $('body').append(htmlStr);
-  inst = $('[data-remodal-id=alt-modal]').remodal({
-    'hashTracking': false
-  });
-
   $('body img').click(function (e) {
     e.preventDefault();
     currentImageAlt = $(this).attr('alt');
     $('#alt-input').val(currentImageAlt);
     selectedImage = $(this);
-    inst.open();
+
+    var altValue = window.prompt("Enter an ALT for the image",currentImageAlt);
+
+    updateAltValue(altValue);
   });
 
   $('body img').each(function () {
@@ -85,7 +72,6 @@ function turnOffExtension() {
   document.head.removeChild(injectedCSS);
   document.body.removeChild(injectedScript);
   addBackLinkBehavior();
-  inst.destroy();
   $('body img').css('border', '');
   $('body img').unbind("click");
 }
@@ -132,7 +118,6 @@ chrome.runtime.onMessage.addListener(
         });
       }
     } else if (request.message === "clicked_options_button_action") {
-      //Export the html without the remodal and img border styles
       sendResponse({
         status: "success",
         html: $('html')[0].outerHTML
@@ -142,9 +127,8 @@ chrome.runtime.onMessage.addListener(
 );
 
 //Extension is ON
-$(document).on('confirmation', '.remodal', function () {
+function updateAltValue(alt_value) {
   console.log('Confirmation button is clicked');
-  var alt_value = $('#alt-input').val();
 
   if (alt_value == currentImageAlt) {
     return;
@@ -206,9 +190,4 @@ $(document).on('confirmation', '.remodal', function () {
       selectedImage.attr('draggable',draggable);
     }
   }
-});
-
-$(document).on('closed', '.remodal', function (e) {
-  console.log('Modal is closed' + (e.reason ? ', reason: ' + e.reason : ''));
-  $('#alt-input').val('');
-});
+}
